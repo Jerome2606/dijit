@@ -151,7 +151,9 @@ define([
 					// Non char keys (F1-F12 etc..) shouldn't start a search..
 					// Ascii characters and IME input (Chinese, Japanese etc.) should.
 					//IME input produces keycode == 229.
-					doSearch = typeof key == 'string' || key == 229;
+					// Tested on S5 Android 4.4 selected item in list is key == 229 with type compositionend
+					// To prevent the search of selected item, added conditionnal to key == 229
+					doSearch = typeof key == 'string' || (key == 229 && evt.type !== 'compositionend');
 			}
 			if(doSearch){
 				// need to wait a tad before start search so that the event
